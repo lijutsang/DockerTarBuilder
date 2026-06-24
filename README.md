@@ -28,6 +28,11 @@ https://wkdaily.cpolar.top/archives/gc
 > 如果Github Release文件下载缓慢 你可以在<br>         
 
 > [![Github](https://img.shields.io/badge/国内加速站前缀套用点此处查看网址列表-FC7C0D?logo=github&logoColor=fff&labelColor=000&style=for-the-badge)](https://wkdaily.cpolar.top/archives/1)
+
+## 2026-06-24 更新日志
+> 适配 GitHub Actions Runner 的 Node 20 退役计划，升级工作流依赖：`actions/checkout@v5`、`actions/upload-artifact@v6`、`softprops/action-gh-release@v3`。<br>
+> 优化 ARM64 工作流：部分镜像的 Docker Hub 标签显示为 `linux/arm64`，但 manifest list 的平台描述可能异常，导致 `docker pull --platform linux/arm64` 报错 `no matching manifest for linux/arm64 in the manifest list entries`。现在 ARM64 工作流会在严格拉取失败后自动重试普通拉取，并检查镜像实际架构必须是 `linux/arm64`，确认无误后才继续打包。<br>
+> 例如：`amilys/embyserver_arm64v8:latest` 曾出现 Docker Hub 显示 ARM64，但 manifest list 平台描述异常的情况。
  
 ## 教学视频
 https://www.bilibili.com/video/BV1EZ421M7mL<br>
