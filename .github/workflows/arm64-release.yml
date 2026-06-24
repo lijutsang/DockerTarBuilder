@@ -17,10 +17,30 @@ jobs:
 
       - name: Pull Docker Images and Package
         run: |
+          set -euo pipefail
+
+          pull_arm64_image() {
+            local image="$1"
+            local platform="linux/arm64"
+
+            if docker pull --platform "$platform" "$image"; then
+              return
+            fi
+
+            echo "::warning::${image} does not expose ${platform} in its manifest list; retrying without --platform and verifying image config."
+            docker pull "$image"
+
+            actual_platform="$(docker image inspect "$image" --format '{{.Os}}/{{.Architecture}}')"
+            if [ "$actual_platform" != "$platform" ]; then
+              echo "::error::Pulled ${image} as ${actual_platform}, expected ${platform}."
+              exit 1
+            fi
+          }
+
           images="${{ github.event.inputs.docker_images }}"
           IFS=',' read -r -a image_array <<< "$images"
           for image in "${image_array[@]}"; do
-            docker pull "${image}" --platform "linux/arm64"
+            pull_arm64_image "${image}"
             image_name="${image//\//_}"
             image_name="${image_name//:/_}"
             docker save "${image}" -o "${image_name}-arm64.tar"
