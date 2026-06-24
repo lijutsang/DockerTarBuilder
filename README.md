@@ -54,6 +54,3 @@ https://github.com/wukongdaily/DockerTarBuilder/wiki
 ## 在哪里可以搜索或查询docker镜像的详细信息
 ### [查询镜像的详细信息 点击这里直达](https://docker.fxxk.dedyn.io/)
 
-## ❤️赞助作者 ⬇️⬇️
-
-[![点击这里赞助我](https://img.shields.io/badge/点击这里赞助我-支持作者的项目-orange?logo=github)](https://wkdaily.cpolar.top/01)
